@@ -1,0 +1,57 @@
+﻿@page "/"
+
+<h1>Calcular IMC</h1>
+
+<div class="container">
+    <div class="row align-items-start">
+        <div class="col">
+            <div class="form-floating mb-3">
+                <label for="altura" class="form-label">Altura</label>
+                <input @bind="Altura" type="number" class="form-control" id="altura">
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-floating mb-3">
+                <label for="peso" class="form-label">Peso</label>
+                <input @bind="Peso" type="number" class="form-control" id="peso">
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-start">
+        <div class="col">
+            <button @onclick="CalcularImc" type="button" class="btn btn-primary">Calcular</button>
+            <button @onclick="Limpar" type="button" class="btn btn-danger">Limpar</button>
+        </div>
+        <div class="col">
+            <h2 hidden="@(!Imc.HasValue)">O IMC é <span class="badge bg-secondary">@Imc</span></h2>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    private double Altura { get; set; }
+    private double Peso { get; set; }
+
+    private double? Imc { get; set; }
+
+    private void CalcularImc()
+    {
+        if (Peso > 0 && Altura > 0)
+        {
+            Imc = Math.Round(Peso / Math.Pow(Altura, 2), 2);
+        }
+        else
+        {
+            Imc = null;
+        }
+    }
+
+    private void Limpar()
+    {
+        Peso = 0;
+        Altura = 0;
+        Imc = null;
+    }
+}
